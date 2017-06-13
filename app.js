@@ -1,10 +1,12 @@
 /*jshint esversion: 6*/
 
-const express     = require('express');
-const open        = require('open');
-const bodyParser  = require('body-parser');
-const app         = express();
-const PORT          = process.env.PORT || 5000;
+const express     = require('express'),
+      open        = require('open'),
+      bodyParser  = require('body-parser'),
+      mongoose    = require('mongoose'),
+      app         = express(),
+      PORT        = process.env.PORT || 5000;
+
 var campgrounds   = [
                       {name: "Banff campground", image: "images/banff.jpg"},
                       {name: "Canmore campground", image: "images/lake.jpg"},
@@ -16,6 +18,30 @@ var campgrounds   = [
                       {name: "Canmore campground", image: "images/lake.jpg"},
                       {name: "Lake Louise campground", image: "images/canmore.jpg"}
                     ];
+
+mongoose.connect("mongodb://localhost/yelp");
+
+var campgroundsSchema = new mongoose.Schema({
+  name: String,
+  image: String
+});
+
+var Campground = mongoose.model("Campground", campgroundsSchema);
+
+Campground.create(
+  {
+     name: "Chocrane",
+     image: "images/banff.jpg"
+  }, function(err, camp) {
+    if (err) {
+      console.log("err");
+    } else {
+      console.log("New Camp added: ");
+      console.log(camp);
+    }
+  }
+
+  );
 
 app.set("view engine", "ejs");
 app.use(express.static('./public'));
