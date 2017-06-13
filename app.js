@@ -23,15 +23,17 @@ mongoose.connect("mongodb://localhost/yelp");
 
 var campgroundsSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 var Campground = mongoose.model("Campground", campgroundsSchema);
 
 // Campground.create(
 //   {
-//      name: "Banff Campground",
-//      image: "images/banff.jpg"
+//      name: "Lake Louise Campground",
+//      image: "images/lake.jpg",
+//      description: "Beautiful landscape with soothing atmostphere, best time to visit is July, August"
 //   }, function(err, camp) {
 //     if (err) {
 //       console.log("err");
@@ -44,7 +46,7 @@ var Campground = mongoose.model("Campground", campgroundsSchema);
 //   );
 
 app.set("view engine", "ejs");
-app.use(express.static('./public'));
+app.use(express.static('./public/'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(req, res) {
@@ -58,7 +60,7 @@ app.get("/campgrounds", function(req, res) {
       if (err) {
         console.log(err);
       } else {
-  res.render("campgrounds", {campgrounds: camps});
+  res.render("index", {campgrounds: camps});
       }
   });
 });
@@ -71,13 +73,24 @@ app.post("/campgrounds", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.redirect("campgrounds");
+      res.redirect("index");
     }
   });
 });
 
 app.get("/campgrounds/new", function(req, res) {
   res.render("new");
+});
+
+app.get("/campgrounds/:id", function(req, res) {
+
+  Campground.findById(req.params.id, function(err, camp) {
+    if (err) {
+      console.log(err);
+    } else {
+  res.render("show", {campground: camp});
+    }
+  });
 });
 
 app.listen(PORT, function(err) {
