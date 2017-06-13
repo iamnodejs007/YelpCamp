@@ -1,0 +1,27 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "Yelp Camp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node-dev app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gsync/YelpCamp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gsync/YelpCamp/issues"
+  },
+  "homepage": "https://github.com/Gsync/YelpCamp#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "open": "0.0.5"
+  }
+}
