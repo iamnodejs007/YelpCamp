@@ -8,6 +8,12 @@ const PORT          = process.env.PORT || 5000;
 var campgrounds   = [
                       {name: "Banff campground", image: "images/banff.jpg"},
                       {name: "Canmore campground", image: "images/lake.jpg"},
+                      {name: "Lake Louise campground", image: "images/canmore.jpg"},
+                      {name: "Banff campground", image: "images/banff.jpg"},
+                      {name: "Canmore campground", image: "images/lake.jpg"},
+                      {name: "Lake Louise campground", image: "images/canmore.jpg"},
+                      {name: "Banff campground", image: "images/banff.jpg"},
+                      {name: "Canmore campground", image: "images/lake.jpg"},
                       {name: "Lake Louise campground", image: "images/canmore.jpg"}
                     ];
 
