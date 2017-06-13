@@ -6,6 +6,7 @@ const app         = express();
 var PORT          = process.env.PORT || 5000;
 
 app.set("view engine", "ejs");
+app.use(express.static('./public'));
 
 app.get("/", function(req, res) {
 
@@ -14,9 +15,9 @@ app.get("/", function(req, res) {
 
 app.get("/campgrounds", function(req, res) {
    var campgrounds = [
-    {name: "Banff campground", image: "http://photosforclass.com/download/5641024448"},
-    {name: "Canmore campground", image: "http://photosforclass.com/download/8524305204"},
-    {name: "Lake Louise campground", image: "http://photosforclass.com/download/7121861565"}
+    {name: "Banff campground", image: "images/banff.jpg"},
+    {name: "Canmore campground", image: "images/lake.jpg"},
+    {name: "Lake Louise campground", image: "images/canmore.jpg"}
   ];
   res.render("campgrounds", {campgrounds: campgrounds});
 });
