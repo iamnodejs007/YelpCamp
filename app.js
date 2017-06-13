@@ -7,17 +7,17 @@ const express     = require('express'),
       app         = express(),
       PORT        = process.env.PORT || 5000;
 
-var campgrounds   = [
-                      {name: "Banff campground", image: "images/banff.jpg"},
-                      {name: "Canmore campground", image: "images/lake.jpg"},
-                      {name: "Lake Louise campground", image: "images/canmore.jpg"},
-                      {name: "Banff campground", image: "images/banff.jpg"},
-                      {name: "Canmore campground", image: "images/lake.jpg"},
-                      {name: "Lake Louise campground", image: "images/canmore.jpg"},
-                      {name: "Banff campground", image: "images/banff.jpg"},
-                      {name: "Canmore campground", image: "images/lake.jpg"},
-                      {name: "Lake Louise campground", image: "images/canmore.jpg"}
-                    ];
+// var campgrounds   = [
+//                       {name: "Banff campground", image: "images/banff.jpg"},
+//                       {name: "Canmore campground", image: "images/lake.jpg"},
+//                       {name: "Lake Louise campground", image: "images/canmore.jpg"},
+//                       {name: "Banff campground", image: "images/banff.jpg"},
+//                       {name: "Canmore campground", image: "images/lake.jpg"},
+//                       {name: "Lake Louise campground", image: "images/canmore.jpg"},
+//                       {name: "Banff campground", image: "images/banff.jpg"},
+//                       {name: "Canmore campground", image: "images/lake.jpg"},
+//                       {name: "Lake Louise campground", image: "images/canmore.jpg"}
+//                     ];
 
 mongoose.connect("mongodb://localhost/yelp");
 
@@ -28,20 +28,20 @@ var campgroundsSchema = new mongoose.Schema({
 
 var Campground = mongoose.model("Campground", campgroundsSchema);
 
-Campground.create(
-  {
-     name: "Chocrane",
-     image: "images/banff.jpg"
-  }, function(err, camp) {
-    if (err) {
-      console.log("err");
-    } else {
-      console.log("New Camp added: ");
-      console.log(camp);
-    }
-  }
+// Campground.create(
+//   {
+//      name: "Banff Campground",
+//      image: "images/banff.jpg"
+//   }, function(err, camp) {
+//     if (err) {
+//       console.log("err");
+//     } else {
+//       console.log("New Camp added: ");
+//       console.log(camp);
+//     }
+//   }
 
-  );
+//   );
 
 app.set("view engine", "ejs");
 app.use(express.static('./public'));
@@ -53,16 +53,27 @@ app.get("/", function(req, res) {
 });
 
 app.get("/campgrounds", function(req, res) {
-
-  res.render("campgrounds", {campgrounds: campgrounds});
+  Campground.find({},
+    function (err, camps) {
+      if (err) {
+        console.log(err);
+      } else {
+  res.render("campgrounds", {campgrounds: camps});
+      }
+  });
 });
 
 app.post("/campgrounds", function(req, res) {
   var name  = req.body.name;
   var image = req.body.image;
   var newCampground = {name: name, image: image};
-  campgrounds.push(newCampground);
-  res.redirect("campgrounds");
+  Campground.create(newCampground, function(err, newcamp) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("campgrounds");
+    }
+  });
 });
 
 app.get("/campgrounds/new", function(req, res) {
