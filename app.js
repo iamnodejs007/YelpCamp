@@ -4,6 +4,7 @@ const express     = require('express'),
       open        = require('open'),
       bodyParser  = require('body-parser'),
       mongoose    = require('mongoose'),
+      Campground  = require("./models/campground"),
       app         = express(),
       PORT        = process.env.PORT || 5000;
 
@@ -21,13 +22,7 @@ const express     = require('express'),
 
 mongoose.connect("mongodb://localhost/yelp");
 
-var campgroundsSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
 
-var Campground = mongoose.model("Campground", campgroundsSchema);
 
 // Campground.create(
 //   {
