@@ -5,6 +5,7 @@ const express     = require('express'),
       bodyParser  = require('body-parser'),
       mongoose    = require('mongoose'),
       Campground  = require("./models/campground"),
+      seed        = require("./seeds"),
       app         = express(),
       PORT        = process.env.PORT || 5000;
 
@@ -19,7 +20,7 @@ const express     = require('express'),
 //                       {name: "Canmore campground", image: "images/lake.jpg"},
 //                       {name: "Lake Louise campground", image: "images/canmore.jpg"}
 //                     ];
-
+seed();
 mongoose.connect("mongodb://localhost/yelp");
 
 
