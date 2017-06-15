@@ -9,41 +9,13 @@ const express     = require('express'),
       app         = express(),
       PORT        = process.env.PORT || 5000;
 
-// var campgrounds   = [
-//                       {name: "Banff campground", image: "images/banff.jpg"},
-//                       {name: "Canmore campground", image: "images/lake.jpg"},
-//                       {name: "Lake Louise campground", image: "images/canmore.jpg"},
-//                       {name: "Banff campground", image: "images/banff.jpg"},
-//                       {name: "Canmore campground", image: "images/lake.jpg"},
-//                       {name: "Lake Louise campground", image: "images/canmore.jpg"},
-//                       {name: "Banff campground", image: "images/banff.jpg"},
-//                       {name: "Canmore campground", image: "images/lake.jpg"},
-//                       {name: "Lake Louise campground", image: "images/canmore.jpg"}
-//                     ];
-seed();
 mongoose.connect("mongodb://localhost/yelp");
-
-
-
-// Campground.create(
-//   {
-//      name: "Lake Louise Campground",
-//      image: "images/lake.jpg",
-//      description: "Beautiful landscape with soothing atmostphere, best time to visit is July, August"
-//   }, function(err, camp) {
-//     if (err) {
-//       console.log("err");
-//     } else {
-//       console.log("New Camp added: ");
-//       console.log(camp);
-//     }
-//   }
-
-//   );
 
 app.set("view engine", "ejs");
 app.use(express.static('./public/'));
 app.use(bodyParser.urlencoded({extended: true}));
+
+seed();
 
 app.get("/", function(req, res) {
 
@@ -81,11 +53,11 @@ app.get("/campgrounds/new", function(req, res) {
 
 app.get("/campgrounds/:id", function(req, res) {
 
-  Campground.findById(req.params.id, function(err, camp) {
+  Campground.findById(req.params.id).populate("comments").exec(function(err, camp) {
     if (err) {
       console.log(err);
     } else {
-  res.render("show", {campground: camp});
+      res.render("show", {campground: camp});
     }
   });
 });
