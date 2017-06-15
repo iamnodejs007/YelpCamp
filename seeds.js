@@ -1,6 +1,6 @@
-var moongoose = require('mongoose');
-var Campground = require('./models/campground');
-var Comment   = rquire('./models');
+var moongoose   = require('mongoose');
+var Campground  = require('./models/campground');
+var Comment     = require('./models/comment.js');
 
 var data = [
     {
@@ -38,7 +38,7 @@ function seed() {
             Comment.create(
               {
                 text: "Best place in the world!",
-                author: khuram
+                author: "khuram"
               }, function(err, comment) {
                 if (err) {
                   console.log(err);
