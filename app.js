@@ -5,6 +5,7 @@ const express     = require('express'),
       bodyParser  = require('body-parser'),
       mongoose    = require('mongoose'),
       Campground  = require("./models/campground"),
+      Comment     = require("./models/comment"),
       seed        = require("./seeds"),
       app         = express(),
       PORT        = process.env.PORT || 5000;
@@ -75,6 +76,26 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
 });
 
 
+//Post New Comment Route
+app.post("/campgrounds/:id/comments", function(req, res) {
+ Campground.findById(req.params.id, function(err, camp) {
+    if (err) {
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+      Comment.create(req.body.comment, function(err, comment) {
+        if (err) {
+          console.log(err);
+        } else {
+          camp.comments.push(comment);
+          camp.save();
+      res.redirect("/campgrounds/" + camp._id);
+        }
+      });
+    }
+  });
+});
+
 /*=====COMMENTS ROUTES End=====*/
 
 app.listen(PORT, function(err) {
@@ -85,3 +106,4 @@ app.listen(PORT, function(err) {
   }
   console.log("Yelp camp Server has started on port: " + PORT);
 });
+
