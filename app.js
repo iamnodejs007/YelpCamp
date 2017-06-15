@@ -1,14 +1,17 @@
 /*jshint esversion: 6*/
 
-const express     = require('express'),
-      open        = require('open'),
-      bodyParser  = require('body-parser'),
-      mongoose    = require('mongoose'),
-      Campground  = require("./models/campground"),
-      Comment     = require("./models/comment"),
-      seed        = require("./seeds"),
-      app         = express(),
-      PORT        = process.env.PORT || 5000;
+const express       = require('express'),
+      open          = require('open'),
+      bodyParser    = require('body-parser'),
+      mongoose      = require('mongoose'),
+      passport      = require('passport'),
+      LocalStrategy = require('passport-local'),
+      Campground    = require("./models/campground"),
+      Comment       = require("./models/comment"),
+      User          = require("./models/user"),
+      seed          = require("./seeds"),
+      app           = express(),
+      PORT          = process.env.PORT || 5000;
 
 mongoose.connect("mongodb://localhost/yelp");
 
