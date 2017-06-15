@@ -13,7 +13,7 @@ const express     = require('express'),
 mongoose.connect("mongodb://localhost/yelp");
 
 app.set("view engine", "ejs");
-app.use(express.static('./public/'));
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 seed();
