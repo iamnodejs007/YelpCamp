@@ -1,5 +1,6 @@
 var moongoose = require('mongoose');
 var Campground = require('./models/campground');
+var Comment   = rquire('./models');
 
 var data = [
     {
@@ -28,21 +29,31 @@ function seed() {
 
         //Add campgrounds
          data.forEach(function(seed) {
-      Campground.create(seed, function(err) {
+      Campground.create(seed, function(err, campground) {
           if (err) {
            console.log(err);
           } else {
             console.log("Added the campgrounds");
+            //Add comments
+            Comment.create(
+              {
+                text: "Best place in the world!",
+                author: khuram
+              }, function(err, comment) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  campground.comments.push(comment);
+                  campground.save();
+                  console.log("Created new comments");
+                }
+            });
           }
         });
       });
       }
 
   });
-
-
-
-  //Add comments
 }
 
 module.exports = seed;
