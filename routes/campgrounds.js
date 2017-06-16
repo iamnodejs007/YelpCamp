@@ -43,8 +43,8 @@ router.get("/new", isLoggedIn, function(req, res) {
   res.render("campgrounds/new");
 });
 
+//Show GET Route
 router.get("/:id", function(req, res) {
-
   Campground.findById(req.params.id).populate("comments").exec(function(err, camp) {
     if (err) {
       console.log(err);
@@ -53,6 +53,31 @@ router.get("/:id", function(req, res) {
     }
   });
 });
+
+//Edit GET Route
+router.get("/:id/edit", function(req, res) {
+  Campground.findById(req.params.id, function(err, camp) {
+    if (err) {
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+  res.render("campgrounds/edit", {campground: camp});
+    }
+  });
+});
+
+// Update POST Route
+router.put("/:id", function(req, res) {
+  Campground.findByIdAndUpdate(req.params.id, req.body.camp, function(err, UpdatedCamp) {
+    if (err) {
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+      res.redirect("/campgrounds/" + req.params.id);
+    }
+  });
+});
+
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
