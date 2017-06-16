@@ -11,7 +11,12 @@ const express       = require('express'),
       User          = require("./models/user"),
       seed          = require("./seeds"),
       app           = express(),
+
       PORT          = process.env.PORT || 5000;
+
+const commentRoutes = require("./routes/comments"),
+      campRoutes    = require("./routes/campgrounds"),
+      authRoutes    = require("./routes/auth");
 
 mongoose.connect("mongodb://localhost/yelp");
 
@@ -45,130 +50,11 @@ app.get("/", function(req, res) {
   res.render("landing");
 });
 
-app.get("/campgrounds", function(req, res) {
-  Campground.find({},
-    function (err, camps) {
-      if (err) {
-        console.log(err);
-      } else {
-  res.render("campgrounds/index", {campgrounds: camps});
-      }
-  });
-});
-
-app.post("/campgrounds", function(req, res) {
-  var name  = req.body.name;
-  var image = req.body.image;
-  var desc  = req.body.description;
-  var newCampground = {name: name, image: image, description: desc};
-  Campground.create(newCampground, function(err, newcamp) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/campgrounds");
-    }
-  });
-});
-
-app.get("/campgrounds/new", function(req, res) {
-  res.render("campgrounds/new");
-});
-
-app.get("/campgrounds/:id", function(req, res) {
-
-  Campground.findById(req.params.id).populate("comments").exec(function(err, camp) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("campgrounds/show", {campground: camp});
-    }
-  });
-});
-
-/*=====COMMENTS ROUTES Start=====*/
-
-app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res) {
-  Campground.findById(req.params.id, function(err, camp) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("comments/new", {campground: camp});
-    }
-  });
-});
 
 
-//Post New Comment Route
-app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res) {
- Campground.findById(req.params.id, function(err, camp) {
-    if (err) {
-      console.log(err);
-      res.redirect("/campgrounds");
-    } else {
-      Comment.create(req.body.comment, function(err, comment) {
-        if (err) {
-          console.log(err);
-        } else {
-          camp.comments.push(comment);
-          camp.save();
-      res.redirect("/campgrounds/" + camp._id);
-        }
-      });
-    }
-  });
-});
-
-/*=====COMMENTS ROUTES End=====*/
-
-
-/*=====AUTH ROUTES Start=====*/
-
-//Register GET Route
-app.get("/register", function(req, res) {
-  res.render("auth/register");
-});
-
-//Register POST Route
-app.post("/register", function(req, res) {
-  var newUser = new User({username: req.body.username});
-  User.register(newUser, req.body.password, function(err, user) {
-    if (err) {
-      console.log(err);
-      return res.redirect("auth/register");
-    }
-    passport.authenticate("local")(req, res, function() {
-      res.redirect("/campgrounds");
-    });
-  });
-});
-
-//Login GET Route
-app.get("/login", function(req, res) {
-  res.render("auth/login");
-});
-
-//Login POST Route
-app.post("/login", passport.authenticate("local", {
-  successRedirect: "/campgrounds",
-  failureRedirect: "auth/login"
-}), function(req, res) {
-
-});
-
-//Logout GET Route
-app.get("/logout", function(req, res) {
-  req.logout();
-  res.redirect("campgrounds");
-});
-
-/*=====AUTH ROUTES End=====*/
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
+app.use(authRoutes);
+app.use("/campgrounds", campRoutes);
+app.use("/campgrounds/:id/comments",commentRoutes);
 
 app.listen(PORT, function(err) {
   if (err) {
