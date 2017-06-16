@@ -24,7 +24,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
-seed();
+//seed();
 
 //Passportjs Configuration
 app.use(require('express-session')({
@@ -54,7 +54,7 @@ app.get("/", function(req, res) {
 
 app.use(authRoutes);
 app.use("/campgrounds", campRoutes);
-app.use("/campgrounds/:id/comments",commentRoutes);
+app.use("/campgrounds/:id/comments",commentRoutes); //can get the id because of mergeparams: true in commentsjs
 
 app.listen(PORT, function(err) {
   if (err) {
