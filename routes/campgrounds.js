@@ -16,10 +16,20 @@ router.get("/", function(req, res) {
 });
 
 router.post("/", isLoggedIn, function(req, res) {
-  let name  = req.body.name;
-  let image = req.body.image;
-  let desc  = req.body.description;
-  let newCampground = {name: name, image: image, description: desc};
+  let name          = req.body.name,
+      image         = req.body.image,
+      desc          = req.body.description,
+      author        = {
+        id:       req.user._id,
+        username: req.user.username
+      },
+      newCampground = {
+        name:         name,
+        image:        image,
+        description:  desc,
+        author:       author
+        };
+
   Campground.create(newCampground, function(err, newcamp) {
     if (err) {
       console.log(err);
