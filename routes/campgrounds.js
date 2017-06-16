@@ -55,15 +55,10 @@ router.get("/:id", function(req, res) {
 });
 
 //Edit GET Route
-router.get("/:id/edit", function(req, res) {
-  Campground.findById(req.params.id, function(err, camp) {
-    if (err) {
-      console.log(err);
-      res.redirect("/campgrounds");
-    } else {
-  res.render("campgrounds/edit", {campground: camp});
-    }
-  });
+router.get("/:id/edit", checkCampOwner, function(req, res) {
+    Campground.findById(req.params.id, function(err, camp) {
+        res.render("campgrounds/edit", {campground: camp});
+    });
 });
 
 // Update POST Route
@@ -96,6 +91,25 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect("/login");
+}
+
+function checkCampOwner(req, res, next) {
+  if (req.isAuthenticated()) { //if user is logged in
+    Campground.findById(req.params.id, function(err, camp) {
+      if (err) {
+        console.log(err);
+        res.redirect("back");
+      } else {
+            if (camp.author.id.equals(req.user._id)) { //if user equal to camp user :mongoose method
+              next();
+            } else {
+                res.redirect("back");
+            }
+      }
+    });
+  } else {
+        res.redirect("back");
+  }
 }
 
 module.exports = router;
