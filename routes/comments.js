@@ -40,7 +40,7 @@ router.post("/", isLoggedIn, function(req, res) {
 });
 
 //Edit comments GET Route
-router.get("/:comment_id/edit", function(req, res) {
+router.get("/:comment_id/edit", checkCommentOwner, function(req, res) {
   Comment.findById(req.params.comment_id, function(err, comment) {
     if (err) {
       console.log(err);
@@ -52,7 +52,7 @@ router.get("/:comment_id/edit", function(req, res) {
 });
 
 //Update comments PUT Route
-router.put("/:comment_id", function(req, res) {
+router.put("/:comment_id", checkCommentOwner, function(req, res) {
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, comment) {
     if (err) {
       console.log(err);
@@ -64,7 +64,7 @@ router.put("/:comment_id", function(req, res) {
 });
 
 //Destroy Route
-router.delete("/:comment_id", function(req, res) {
+router.delete("/:comment_id", checkCommentOwner, function(req, res) {
   Comment.findByIdAndRemove(req.params.comment_id, function(err) {
     if (err) {
       res.redirect("back");
@@ -79,6 +79,25 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect("/login");
+}
+
+function checkCommentOwner(req, res, next) {
+  if (req.isAuthenticated()) { //if user is logged in
+    Comment.findById(req.params.comment_id, function(err, comment) {
+      if (err) {
+        console.log(err);
+        res.redirect("back");
+      } else {
+            if (comment.author.id.equals(req.user._id)) { //if user equal to camp user :mongoose method
+              next();
+            } else {
+                res.redirect("back");
+            }
+      }
+    });
+  } else {
+        res.redirect("back");
+  }
 }
 
 module.exports = router;
