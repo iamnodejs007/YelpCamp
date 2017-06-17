@@ -26,7 +26,7 @@ router.post("/register", function(req, res) {
 
 //Login GET Route
 router.get("/login", function(req, res) {
-    res.render("auth/login", {message: req.flash("error")});
+    res.render("auth/login");
 });
 
 //Login POST Route
@@ -40,6 +40,7 @@ router.post("/login", passport.authenticate("local", {
 //Logout GET Route
 router.get("/logout", function(req, res) {
   req.logout();
+  req.flash("success", "Logged out!!!")
   res.redirect("campgrounds");
 });
 
