@@ -18,6 +18,7 @@ router.get("/", function(req, res) {
 
 router.post("/", middleware.isLoggedIn, function(req, res) {
   let name          = req.body.name,
+      price         = req.body.price,
       image         = req.body.image,
       desc          = req.body.description,
       author        = {
@@ -26,6 +27,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
       },
       newCampground = {
         name:         name,
+        price:        price,
         image:        image,
         description:  desc,
         author:       author
