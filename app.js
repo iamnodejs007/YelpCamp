@@ -11,6 +11,7 @@ const express       = require('express'),
       Comment       = require("./models/comment"),
       User          = require("./models/user"),
       seed          = require("./seeds"),
+      flash         = require("connect-flash"),
       app           = express(),
 
       PORT          = process.env.PORT || 5000;
@@ -25,6 +26,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 //seed();
 
