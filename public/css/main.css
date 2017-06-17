@@ -13,3 +13,12 @@
 .delete-form {
   display: inline;
 }
+
+.sign {
+  width: 30%; 
+  margin: 25px auto;
+}
+
+.center {
+  text-align: center;
+}
