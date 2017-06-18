@@ -19,8 +19,8 @@ const commentRoutes = require("./routes/comments"),
       campRoutes    = require("./routes/campgrounds"),
       authRoutes    = require("./routes/auth");
 
-// mongoose.connect("mongodb://localhost/yelp");
-mongoose.connect("mongodb://khuramadmin:xl3aks00@ds129442.mlab.com:29442/yelp");
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp";
+mongoose.connect(url);
 
 
 app.set("view engine", "ejs");
