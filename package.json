@@ -1,11 +1,11 @@
 {
   "name": "yelpcamp",
   "version": "1.0.0",
-  "description": "Yelp Camp",
+  "description": "Yelp Camp Demo app to demonstrate the express RESTful routing with mongoose",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node-dev app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
