@@ -1,4 +1,4 @@
-# YelpCamp
+# YelpCamp [Demo](http://yelp-camp-demo.herokuapp.com/)
 
 ### Dependencies
 - express
