@@ -1,7 +1,6 @@
 /*jshint esversion: 6*/
 
 const express       = require('express'),
-      open          = require('open'),
       bodyParser    = require('body-parser'),
       mongoose      = require('mongoose'),
       passport      = require('passport'),
@@ -66,8 +65,7 @@ app.listen(PORT, function(err) {
   if (err) {
     console.log(err);
   } else {
-    open('http://localhost:' + PORT);
-  }
   console.log("Yelp camp Server has started on port: " + PORT);
+  }
 });
 

@@ -1,6 +1,9 @@
 {
   "name": "yelpcamp",
   "version": "1.0.0",
+   "engines": {
+    "node": "6.9.4"
+  },
   "description": "Yelp Camp Demo app to demonstrate the express RESTful routing with mongoose",
   "main": "app.js",
   "scripts": {
