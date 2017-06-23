@@ -6,6 +6,7 @@
 - passport
 - ejs
 - connect-flash
+- moment
 
 ### CDNs
 - bootstrap
