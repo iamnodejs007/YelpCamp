@@ -31,6 +31,8 @@ app.use(flash());
 
 //seed();
 
+app.locals.moment = require('moment');
+
 //Passportjs Configuration
 app.use(require('express-session')({
   secret: "this is my secret key",

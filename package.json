@@ -1,7 +1,7 @@
 {
   "name": "yelpcamp",
   "version": "1.0.0",
-   "engines": {
+  "engines": {
     "node": "6.9.4"
   },
   "description": "Yelp Camp Demo app to demonstrate the express RESTful routing with mongoose",
@@ -27,6 +27,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "method-override": "^2.3.9",
+    "moment": "^2.18.1",
     "mongoose": "^4.10.6",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
