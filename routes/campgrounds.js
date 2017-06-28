@@ -3,7 +3,8 @@
 const express = require('express'),
       router  = express.Router(),
       Campground  = require("../models/campground"),
-      middleware  = require("../middleware");
+      middleware  = require("../middleware"),
+      geocoder    = require("geocoder");
 
 router.get("/", function(req, res) {
   Campground.find({},
