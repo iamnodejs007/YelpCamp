@@ -18,6 +18,11 @@ router.get("/", function(req, res) {
 });
 
 router.post("/", middleware.isLoggedIn, function(req, res) {
+  geocoder.geocode(req.body.location, function(err, data) {
+    var lat       = data.results[0].geometry.location.lat,
+        long      = data.results[0].geometry.location.long,
+        location  = data.results[0].formatted_address;
+  });
   let name          = req.body.name,
       price         = req.body.price,
       image         = req.body.image,
@@ -31,6 +36,9 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         price:        price,
         image:        image,
         description:  desc,
+        location:     location,
+        lat:          lat,
+        long:         long,
         author:       author
         };
 
