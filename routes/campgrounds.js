@@ -77,9 +77,9 @@ router.get("/:id/edit", middleware.checkCampOwner, function(req, res) {
 router.put("/:id", middleware.checkCampOwner, function(req, res) {
   geocoder.geocode(req.body.location, function(err, data) {
     var lat       = data.results[0].geometry.location.lat,
-        lng      = data.results[0].geometry.location.lng,
+        lng       = data.results[0].geometry.location.lng,
         location  = data.results[0].formatted_address;
-    var newData = {
+    var newCampground = {
         name:         req.body.name,
         price:        req.body.price,
         image:        req.body.image,
@@ -88,7 +88,7 @@ router.put("/:id", middleware.checkCampOwner, function(req, res) {
         lat:          lat,
         lng:          lng
       };
-    Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, UpdatedCamp) {
+    Campground.findByIdAndUpdate(req.params.id, {$set: newCampground}, function(err, UpdatedCamp) {
       if (err) {
         req.flash("error", err.message);
         res.redirect("back");
