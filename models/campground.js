@@ -7,7 +7,7 @@ var campgroundsSchema = mongoose.Schema({
   description: String,
   location: String,
   lat: Number,
-  long: Number,
+  lng: Number,
   createdAt: {type: Date, default: Date.now},
   author: {
     id: {
