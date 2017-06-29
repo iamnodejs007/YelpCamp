@@ -83,7 +83,7 @@ router.put("/:id", middleware.checkCampOwner, function(req, res) {
         name:         req.body.name,
         price:        req.body.price,
         image:        req.body.image,
-        description:  req.body.desc,
+        description:  req.body.description,
         location:     location,
         lat:          lat,
         lng:          lng
